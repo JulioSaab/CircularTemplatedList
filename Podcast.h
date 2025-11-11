@@ -1,29 +1,29 @@
-//
-// Created by Christopher Vaughn on 10/24/25.
-//
-
 #ifndef CIRCULARTEMPLATEDLIST_PODCAST_H
 #define CIRCULARTEMPLATEDLIST_PODCAST_H
 
 #include <iostream>
+#include <sstream>
 #include "Media.h"
 
-// Represents a podcast episode, showing how multiple types can share the list.
 class Podcast : public Media {
 private:
-    std::string episodeTitle;
     std::string host;
     int episodeNumber;
+
 public:
-    // Constructor
-    Podcast(const std::string& t, const std::string& h, const int d)
-    : Media(t, d) {}
+    Podcast(const std::string& t, const std::string& h, int epNum)
+            : Media(t, 0), host(h), episodeNumber(epNum) {}
 
-    // Override toString() from the Media base class.
-    std::string toString() const override;
+    std::string toString() const override {
+        std::stringstream ss;
+        ss << "Podcast: " << title << " | Host: " << host << " | Ep #: " << episodeNumber;
+        return ss.str();
+    }
 
-    // Override play() to provide Podcast-specific behavior.
-    void play() const override;
+    void play() const override {
+        std::cout << "🎙️ Playing episode " << episodeNumber << ": " << title
+                  << " hosted by " << host << " 🎙️" << std::endl;
+    }
 };
 
-#endif //CIRCULARTEMPLATEDLIST_PODCAST_H
+#endif // CIRCULARTEMPLATEDLIST_PODCAST_H

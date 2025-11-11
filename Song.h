@@ -1,34 +1,29 @@
-//
-// Created by Christopher Vaughn on 10/24/25.
-//
-
 #ifndef CIRCULARTEMPLATEDLIST_SONG_H
 #define CIRCULARTEMPLATEDLIST_SONG_H
+
 #include <iostream>
 #include "Media.h"
 
-
-
-// === 2. Derived Media Type (Song) ===
-// The Song class now derives from the Media base class.
 class Song : public Media {
 private:
     std::string artist;
 
 public:
-    // Constructor
     Song(const std::string& t, const std::string& a, int d)
-    : Media(t, d) {}
+            : Media(t, d), artist(a) {}
 
-    //get the artist
-    std::string getArtist() const;
+    std::string getArtist() const { return artist; }
 
-    // Override toString() from the Media base class.
-    std::string toString() const override;
+    std::string toString() const override {
+        int minutes = durationSeconds / 60;
+        int seconds = durationSeconds % 60;
+        return "Song: " + title + " | Artist: " + artist + " | Duration: " +
+               std::to_string(minutes) + "m " + std::to_string(seconds) + "s";
+    }
 
-    // Override play() to provide Song-specific behavior.
-    void play() const override;
+    void play() const override {
+        std::cout << "🎵 Now playing: " << title << " by " << artist << " 🎵" << std::endl;
+    }
 };
 
-
-#endif //CIRCULARTEMPLATEDLIST_SONG_H
+#endif // CIRCULARTEMPLATEDLIST_SONG_H
